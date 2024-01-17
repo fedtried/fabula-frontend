@@ -46,6 +46,7 @@ export type INewStory = {
   quote: string;
   writing: string;
   userId: string;
+  promptId: string;
 }
 
 export type IUpdateUser = {

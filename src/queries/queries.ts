@@ -86,10 +86,10 @@ export const useGetUserById = (userId: string) => {
 // };
 
 
-export const useGetPromptByDate = (date: string) => {
+export const useGetPromptByDate = (date: string, userId: string) => {
     return useQuery({
       queryKey: [QUERY_KEYS.GET_PROMPT, date],
-      queryFn: () => PromptService.getPrompt(date),
+      queryFn: () => PromptService.getPrompt(date, userId),
       enabled: !!date
     });
 }

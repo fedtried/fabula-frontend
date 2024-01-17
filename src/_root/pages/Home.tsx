@@ -29,7 +29,7 @@ const Home = () => {
   });
 
   const {mutateAsync: createStory, isPending: isLoadingCreate} = useCreateStory()
-  const {data: quote, isPending: isPromptsLoading} = useGetPromptByDate(epDate)
+  const {data: quote, isPending: isPromptsLoading} = useGetPromptByDate(epDate, user.id)
 
   useEffect(() => {
     const unparsed = new Date
@@ -39,12 +39,14 @@ const Home = () => {
   }, [])
   
   async function onSubmit (value: z.infer<typeof storyFormSchema>) {
-    const newPost = await createStory({
+    const newPost = await createStory( {
       ...value,
       userId: user.id,
-      date: date,
-      quote: quote ? quote : ''
+      promptId: quote?.id,
+      date: epDate,
+      quote: quote ? quote.quote : ''
     });
+    console.log(newPost)
 
     if (!newPost) {
       toast({
@@ -57,7 +59,7 @@ const Home = () => {
 
   return (
     <>
-          {!isPromptsLoading && quote ? (
+          {!isPromptsLoading && !quote.written ? (
             <Form {...form}>
               <div className="home-container w-full">
               <div className='sm:w-420 flex-col flex-center'>
