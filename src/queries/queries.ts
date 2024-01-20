@@ -93,3 +93,9 @@ export const useGetPromptByDate = (date: string, userId: string) => {
       enabled: !!date
     });
 }
+
+export const useDeleteUser = () => {
+    return useMutation({
+        mutationFn: UserService.deleteUser,
+      });
+}

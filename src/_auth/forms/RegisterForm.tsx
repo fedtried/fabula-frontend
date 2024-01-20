@@ -20,8 +20,6 @@ import { useToast } from '@/components/ui/use-toast'
 import { useCreateUseAccount} from '@/queries/queries'
 import { useUserContext } from '@/context/AuthContext'
 
-
-
 const RegisterForm = () => {
     const {toast} = useToast();
     const {checkAuthUser, isLoading: isUserLoading} = useUserContext();

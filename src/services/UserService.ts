@@ -45,6 +45,12 @@ const getUserStories = async (id: string) => {
     return response.data.stories
 }
 
+
+const deleteUser = async (id: string) => {
+    const response = await apiClient.delete<User>("/user/"+id, { headers: authHeader() })
+    return response.data
+}
+
 const UserService = {
     findAllUsers,
     getCurrentUser,
@@ -52,7 +58,8 @@ const UserService = {
     signInAccount,
     createUserAccount,
     getUserById,
-    getUserStories
+    getUserStories,
+    deleteUser
 }
 
 export default UserService

@@ -56,6 +56,7 @@ const SignInForm = () => {
 
   return (
       <>
+      <section className='flex flex-1 justify-center items-center py-10 flex-col'>
           <Form {...form}>
               <div className='sm:w-420 flex-col flex-center'>
                   <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Login to Fabula</h2>
@@ -105,6 +106,7 @@ const SignInForm = () => {
                   </p>
               </form>
           </Form>
+          </section>
       </>
   )
 }

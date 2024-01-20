@@ -46,8 +46,6 @@ const Home = () => {
       date: epDate,
       quote: quote ? quote.quote : ''
     });
-    console.log(newPost)
-
     if (!newPost) {
       toast({
         title: `Story failed. Please try again.`,
@@ -109,7 +107,6 @@ const Home = () => {
               </div>
             </Form>
             ) : <>
-              {/* {isStoryLoading ? <Loader /> : */}
                 (
                   <div className="flex-center m-auto flex-col gap-5">
                     <p className="header-text small text-grey">{date}</p>
@@ -119,7 +116,6 @@ const Home = () => {
                   </div>
 
                 )
-              {/* } */}
             </>
 
             }

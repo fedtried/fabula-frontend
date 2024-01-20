@@ -2,10 +2,10 @@ import { Route, Routes } from 'react-router-dom'
 import { Toaster } from './components/ui/toaster'
 import AuthLayout from './_auth/AuthLayout'
 import SignInForm from './_auth/forms/SignInForm'
-import RegisterForm from './_auth/forms/RegisterForm'
 import RootLayout from './_root/RootLayout'
 import { About, Home, UpdateProfile, Writing } from './_root/pages'
 import NookLayout from './_root/pages/NookLayout'
+import Register from './_auth/Register'
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
             {/* public routes */}
             <Route element={<AuthLayout />}>
                 <Route path='/sign-in' element ={<SignInForm />}/>
-                <Route path='/register' element ={<RegisterForm />}/>
+                <Route path='/register' element ={<Register />}/>
             </Route>
 
             {/* private routes */}

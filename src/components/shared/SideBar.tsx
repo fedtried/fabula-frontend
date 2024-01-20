@@ -1,7 +1,7 @@
 import { sidebarLinks } from '@/constants'
 import { useUserContext } from '@/context/AuthContext'
 import { INavLink } from '@/types'
-import React from 'react'
+import Avatar from 'react-avatar';
 import { Link, useLocation } from 'react-router-dom'
 
 const SideBar = () => {
@@ -12,10 +12,7 @@ const SideBar = () => {
         <section className="leftsidebar  border-r-2 border-r-gray-400">
             <div className="flex flex-col gap-11">
                 <div className="flex gap-2 flex-center">
-                    <img
-                        src={''}
-                        className="h-14 w-14 rounded-full"
-                    />
+                    <Avatar className="h-14 w-14 rounded-full" name={user.name} />
                     <div>
                         <p className="h3-bold">{user.name}</p>
                         <p className="text-grey text-sm">{user.email}</p>
