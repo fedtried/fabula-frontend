@@ -1,9 +1,9 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent} from "../ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 
 const StoriesCard = (props: { writing: string; date: string; quote: string }) => {
-  let writing = props.writing
-  let date = props.date
-  let quote = props.quote
+  const writing = props.writing
+  const date = props.date
+  const quote = props.quote
   
   return (
     <Card>

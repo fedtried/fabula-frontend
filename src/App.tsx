@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
-import { Toaster } from './components/ui/toaster'
 import AuthLayout from './_auth/AuthLayout'
+import Register from './_auth/Register'
 import SignInForm from './_auth/forms/SignInForm'
 import RootLayout from './_root/RootLayout'
 import { About, Home, UpdateProfile, Writing } from './_root/pages'
 import NookLayout from './_root/pages/NookLayout'
-import Register from './_auth/Register'
+import { Toaster } from './components/ui/toaster'
 
 function App() {
 

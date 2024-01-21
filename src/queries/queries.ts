@@ -1,9 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { QUERY_KEYS } from "./queryKeys"
-import UserService from "../services/UserService"
-import { INewUser, INewStory } from "@/types"
-import StoryService from "@/services/StoryService"
 import PromptService from "@/services/PromptService"
+import StoryService from "@/services/StoryService"
+import { INewStory, INewUser, IPrompt, IUpdateUser } from "@/types"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import UserService from "../services/UserService"
+import { QUERY_KEYS } from "./queryKeys"
 
 export const useGetAllUsers = () => {
     return useQuery ({
@@ -46,11 +46,11 @@ export const useCreateStory = () => {
     })
 }
 
-export const useGetStoryByDate = (storyId?: string, userId?: string) => {
+export const useGetStoryByDate = (storyId?: string) => {
     return useQuery({
-      queryKey: [QUERY_KEYS.GET_STORY_BY_ID, storyId, userId],
-      queryFn: () => StoryService.getStoryById(storyId, userId!),
-      enabled: !!storyId && !!userId,
+      queryKey: [QUERY_KEYS.GET_STORY_BY_ID, storyId],
+      queryFn: () => StoryService.getStoryById(storyId),
+      enabled: !!storyId,
     });
 }
 
@@ -70,24 +70,21 @@ export const useGetUserById = (userId: string) => {
     })
 }
 
-// export const useUpdateUser = () => {
-//     const queryClient = useQueryClient();
-//     return useMutation({
-//         mutationFn: (user: IUpdateUser) => updateProfile(user),
-//         onSuccess: (data) => {
-//             queryClient.invalidateQueries({
-//                 queryKey: [QUERY_KEYS.GET_CURRENT_USER],
-//             });
-//             queryClient.invalidateQueries({
-//                 queryKey: [QUERY_KEYS.GET_USER_BY_ID, data!.id],
-//             });
-//         },
-//     });
-// };
+export const useUpdateUser = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (user: IUpdateUser) => UserService.updateUser(user),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+            });
+        },
+    });
+};
 
 
 export const useGetPromptByDate = (date: string, userId: string) => {
-    return useQuery({
+    return useQuery<IPrompt | { written: boolean }>({
       queryKey: [QUERY_KEYS.GET_PROMPT, date],
       queryFn: () => PromptService.getPrompt(date, userId),
       enabled: !!date

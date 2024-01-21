@@ -50,6 +50,15 @@ export type INewStory = {
 }
 
 export type IUpdateUser = {
-  userId: string;
-  name: string;
+  id: string;
+  name?: string;
+  email?: string;
+  currentPassword?: string;
+  newPassword?: string;
+}
+
+export type IPrompt = {
+    id: string;
+    quote: string;
+    date: string;
 }

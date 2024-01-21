@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import Loader from '@/components/shared/Loader'
 import { Button } from '@/components/ui/button'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
 import {
     Form,
     FormControl,
@@ -10,19 +9,20 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-  } from "@/components/ui/form"
-  import { Input } from "@/components/ui/input"
-import { registerFormSchema } from '@/lib/validation'
-import { z } from 'zod'
-import Loader from '@/components/shared/Loader'
-import { Link, useNavigate } from 'react-router-dom'
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import { useToast } from '@/components/ui/use-toast'
-import { useCreateUseAccount} from '@/queries/queries'
 import { useUserContext } from '@/context/AuthContext'
+import { registerFormSchema } from '@/lib/validation'
+import { useCreateUseAccount } from '@/queries/queries'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import { z } from 'zod'
 
 const RegisterForm = () => {
     const {toast} = useToast();
-    const {checkAuthUser, isLoading: isUserLoading} = useUserContext();
+    const {checkAuthUser} = useUserContext();
     const navigate = useNavigate()
 
     const {mutateAsync: createUserAccount, isPending: isCreatingUser} = useCreateUseAccount();

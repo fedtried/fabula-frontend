@@ -1,12 +1,12 @@
 import Loader from "@/components/shared/Loader"
 import { Button } from "@/components/ui/button"
-import { Form, FormField, FormItem, FormControl } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from '@/components/ui/use-toast'
 import { useUserContext } from "@/context/AuthContext"
-import { useCreateStory, useGetPromptByDate} from "@/queries/queries"
 import { storyFormSchema } from "@/lib/validation"
+import { useCreateStory, useGetPromptByDate } from "@/queries/queries"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { HoverCard } from "@radix-ui/react-hover-card"
 import { useEffect, useState } from "react"
@@ -39,12 +39,13 @@ const Home = () => {
   }, [])
   
   async function onSubmit (value: z.infer<typeof storyFormSchema>) {
-    const newPost = await createStory( {
+  if ("id" in quote! && "quote" in quote && "date" in quote) {
+    const newPost = await createStory({
       ...value,
       userId: user.id,
-      promptId: quote?.id,
+      promptId: quote.id,
       date: epDate,
-      quote: quote ? quote.quote : ''
+      quote: quote.quote,
     });
     if (!newPost) {
       toast({
@@ -52,12 +53,15 @@ const Home = () => {
       });
     }
 
-    navigate(`/nook/${user.id}/writing`)
+    navigate(`/nook/${user.id}/writing`);
+  } else {
+    console.error("Invalid quote format:", quote);
+  }
   }
 
   return (
     <>
-          {!isPromptsLoading && !quote.written ? (
+          {!isPromptsLoading && quote && ("quote" in quote) && !("written" in quote) ? (
             <Form {...form}>
               <div className="home-container w-full">
               <div className='sm:w-420 flex-col flex-center'>

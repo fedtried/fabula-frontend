@@ -1,8 +1,8 @@
-import { sidebarLinks } from '@/constants'
-import { useUserContext } from '@/context/AuthContext'
-import { INavLink } from '@/types'
+import { sidebarLinks } from '@/constants';
+import { useUserContext } from '@/context/AuthContext';
+import { INavLink } from '@/types';
 import Avatar from 'react-avatar';
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom';
 
 const SideBar = () => {
     const {user} = useUserContext()

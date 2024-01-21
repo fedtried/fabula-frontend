@@ -12,7 +12,7 @@ const createStory = async (story : INewStory ) => {
     return response.data
 }
 
-const getStoryById = async (storyId:string | unknown, userId: string) => {
+const getStoryById = async (storyId:string | unknown) => {
     const response = await apiClient.get<INewStory>("/story/"+storyId, { headers: authHeader() })
     return response.data
 }

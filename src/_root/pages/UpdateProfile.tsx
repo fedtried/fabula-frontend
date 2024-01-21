@@ -4,8 +4,9 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
 import { useUserContext } from '@/context/AuthContext'
-import { useDeleteUser, useGetUserById } from '@/queries/queries'
 import { updateProfileFormSchema } from '@/lib/validation'
+import { useDeleteUser, useGetUserById, useUpdateUser } from '@/queries/queries'
+import { IUpdateUser } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -19,14 +20,15 @@ const UpdateProfile = () => {
 
   const { data: currentUser } = useGetUserById(id || "");
   const {mutateAsync: deleteUser, isPending: isLoadingDelete} = useDeleteUser()
-  // const { mutateAsync: updateProfile, isPending: isLoadingUpdate} = useUpdateUser();
+  const { mutateAsync: updateProfile, isPending: isLoadingUpdate} = useUpdateUser();
 
   const form = useForm<z.infer<typeof updateProfileFormSchema>>({
     resolver: zodResolver(updateProfileFormSchema),
     defaultValues: {
       name: user.name,
       email: user.email,
-      password: '',
+      currentPassword: '',
+      newPassword: ''
     },
   })
 
@@ -38,23 +40,30 @@ const UpdateProfile = () => {
     );
 
   async function onSubmit(values: z.infer<typeof updateProfileFormSchema>) {
-    console.log(values)
-    // const updatedUser = await updateProfile({
-    //   userId: currentUser!.id.toString(),
-    //   name: values.name
-    // })
+    const newUser: IUpdateUser = {
+      id : user.id,
+      name: values.name,
+      email: values.email,
+      currentPassword: values.currentPassword
+    }
 
-    // if(!updatedUser){
-    //   return toast({
-    //     title: 'Failed to update. Please try again.'
-    //   })
-    // }
+    if(values.newPassword && values.newPassword.length > 0){
+      newUser.newPassword = values.newPassword
+    }
+    const updatedUser = await updateProfile(newUser)
 
-    // setUser({
-    //   ...user,
-    //   name: updatedUser.name
-    // })
-    // console.log(updatedUser)
+    if(!updatedUser){
+      return toast({
+        title: 'Failed to update. Please try again.'
+      })
+    }
+
+    setUser({
+      ...user,
+      name: updatedUser.name,
+      email: updatedUser.email
+    })
+
   }
 
 
@@ -73,7 +82,7 @@ const UpdateProfile = () => {
   return (
     <>
     {
-      isLoadingDelete ? <Loader /> : (
+      isLoadingDelete || isLoadingUpdate ? <Loader /> : (
       <div className='flex flex-col flex-1 flex-center w-full'>
         <div className='sm:w-420 flex-col flex-center'>
             <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Update Profile</h2>
@@ -111,17 +120,31 @@ const UpdateProfile = () => {
               />
             <FormField
               control={form.control}
-              name="password"
+              name="currentPassword"
               render={({ field }) => (
                   <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Current Password</FormLabel>
+                  <FormControl>
+                      <Input type='password' placeholder="Current password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                  </FormItem>
+              )}
+              /> 
+
+            <FormField
+              control={form.control}
+              name="newPassword"
+              render={({ field }) => (
+                  <FormItem>
+                  <FormLabel>New Password</FormLabel>
                   <FormControl>
                       <Input type='password' placeholder="New password" {...field} />
                   </FormControl>
                   <FormMessage />
                   </FormItem>
               )}
-              />
+              /> 
 
 
               <Button type="submit"> Save

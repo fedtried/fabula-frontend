@@ -1,4 +1,4 @@
-import User, { INewUser } from "@/types"
+import User, { INewUser, IUpdateUser } from "@/types"
 import apiClient from "../api/axios"
 import authHeader from "./authHeader"
 
@@ -51,6 +51,11 @@ const deleteUser = async (id: string) => {
     return response.data
 }
 
+const updateUser = async (user: IUpdateUser) => {
+    const response = await apiClient.put<User>("/user", user, { headers: authHeader() })
+    return response.data
+}
+
 const UserService = {
     findAllUsers,
     getCurrentUser,
@@ -59,7 +64,8 @@ const UserService = {
     createUserAccount,
     getUserById,
     getUserStories,
-    deleteUser
+    deleteUser,
+    updateUser
 }
 
 export default UserService
