@@ -7,5 +7,6 @@ export enum QUERY_KEYS {
     GET_USER_BY_ID = "getUserById",
     GET_FILE_PREVIEW = "getFilePreview",
     GET_PROMPT = "getPrompt",
-    GET_USERS = "getUsers"
+    GET_USERS = "getUsers",
+    GET_MODES ="getModes"
 }

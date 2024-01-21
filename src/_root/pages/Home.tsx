@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useToast } from '@/components/ui/use-toast'
 import { useUserContext } from "@/context/AuthContext"
 import { storyFormSchema } from "@/lib/validation"
-import { useCreateStory, useGetPromptByDate } from "@/queries/queries"
+import { useCreateStory, useGetAllModes, useGetPromptByDate } from "@/queries/queries"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { HoverCard } from "@radix-ui/react-hover-card"
 import { useEffect, useState } from "react"
@@ -30,6 +30,7 @@ const Home = () => {
 
   const {mutateAsync: createStory, isPending: isLoadingCreate} = useCreateStory()
   const {data: quote, isPending: isPromptsLoading} = useGetPromptByDate(epDate, user.id)
+  const {data: mode, isFetching: isLoadingMode} = useGetAllModes()
 
   useEffect(() => {
     const unparsed = new Date
@@ -57,6 +58,17 @@ const Home = () => {
   } else {
     console.error("Invalid quote format:", quote);
   }
+  }
+
+  let cardContent;
+  let word = false;
+  if (mode?.mode_name == 'standard') {
+    cardContent = <HoverCardContent className="text-xs text-muted-foreground"> Use the daily prompt to write a short story. In this mode, you only have 1 chance to save your work and then you're done for the day. </HoverCardContent>
+  } else if (mode?.mode_name == 'time') {
+    cardContent = <HoverCardContent className="text-xs text-muted-foreground"> Use the daily prompt to write a short story. In this mode, you'll be under a time limit so watch that timer! </HoverCardContent>
+  } else {
+    cardContent = <HoverCardContent className="text-xs text-muted-foreground"> Use the daily prompt to write a short story. In this mode, you'll have a maximum of 500 words so watch the word count! </HoverCardContent>
+    word = true;
   }
 
   return (
@@ -92,13 +104,15 @@ const Home = () => {
                    <p className="text-sm text-muted-foreground">
                      {wordCount} {wordCount > 1 ? `words` : `word`}
                    </p>
-                   <HoverCard>
-                      <HoverCardTrigger className="text-xs text-muted-foreground cursor-pointer hover:underline" >How does this work?</HoverCardTrigger>
-                      <HoverCardContent className="text-xs text-muted-foreground">
-                              Use the daily prompt to write a short story. In this mode, you only have 1 chance to save your work and then you're done for the day.
-                      </HoverCardContent>
-                    </HoverCard>
-                    <Button type="submit" disabled={(wordCount < 5)}  className="max-w-sm flex-center m-auto">
+                   {
+                      !isLoadingMode ? 
+                        <HoverCard>
+                          <HoverCardTrigger className="text-xs text-muted-foreground cursor-pointer hover:underline" >How does this work?</HoverCardTrigger>
+                          {cardContent}
+                        </HoverCard>
+                    : ''
+                   }
+                    <Button type="submit" disabled={(wordCount < 5) || (word && wordCount > 500)}  className="max-w-sm flex-center m-auto">
                         {
                             isLoadingCreate ? (
                                 <div className='flex-center gap-2'>
@@ -111,15 +125,12 @@ const Home = () => {
               </div>
             </Form>
             ) : <>
-                (
                   <div className="flex-center m-auto flex-col gap-5">
                     <p className="header-text small text-grey">{date}</p>
                     <h1 className="h1-bold">You have already written todays story!</h1>
                     <h3>Come back again tomorrow to try out the next prompt</h3>
                     <p className="subtle-semibold text-grey">Or head over to your Nook to read through your old ones.</p>
                   </div>
-
-                )
             </>
 
             }

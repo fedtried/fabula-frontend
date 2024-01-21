@@ -62,3 +62,8 @@ export type IPrompt = {
     quote: string;
     date: string;
 }
+
+export type IMode = {
+    mode_id: number;
+    mode_name: string;
+}
