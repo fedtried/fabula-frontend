@@ -1,4 +1,5 @@
 import Loader from "@/components/shared/Loader"
+import Timer from "@/components/shared/Timer"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
@@ -18,6 +19,7 @@ const Home = () => {
   const [date, setDate] = useState('')
   const [epDate, setEpDate] = useState('')
   const [wordCount, setWordCount] = useState(0)
+  const [expired, setExpired] = useState(false)
   const {user} = useUserContext()
   const {toast} = useToast()
   const navigate = useNavigate()
@@ -27,6 +29,8 @@ const Home = () => {
       writing: "",
     },
   });
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 900); // 10 minutes timer
 
   const {mutateAsync: createStory, isPending: isLoadingCreate} = useCreateStory()
   const {data: quote, isPending: isPromptsLoading} = useGetPromptByDate(epDate, user.id)
@@ -62,14 +66,24 @@ const Home = () => {
 
   let cardContent;
   let word = false;
+  let timer = false;
   if (mode?.mode_name == 'standard') {
     cardContent = <HoverCardContent className="text-xs text-muted-foreground"> Use the daily prompt to write a short story. In this mode, you only have 1 chance to save your work and then you're done for the day. </HoverCardContent>
   } else if (mode?.mode_name == 'time') {
+    timer = true;
     cardContent = <HoverCardContent className="text-xs text-muted-foreground"> Use the daily prompt to write a short story. In this mode, you'll be under a time limit so watch that timer! </HoverCardContent>
   } else {
     cardContent = <HoverCardContent className="text-xs text-muted-foreground"> Use the daily prompt to write a short story. In this mode, you'll have a maximum of 500 words so watch the word count! </HoverCardContent>
     word = true;
   }
+
+  const handleExpire = () => {
+    setExpired(true)
+    const value = {
+      writing: form.getValues().writing
+    }
+    onSubmit(value)
+  };
 
   return (
     <>
@@ -101,9 +115,12 @@ const Home = () => {
                         </FormItem>
                       )}
                     />
-                   <p className="text-sm text-muted-foreground">
-                     {wordCount} {wordCount > 1 ? `words` : `word`}
-                   </p>
+                    <div className="flex flex-row justify-between">
+                      <p className="text-sm text-muted-foreground">
+                        {wordCount} {wordCount > 1 ? `words` : `word`}
+                      </p>
+                      {timer ? <Timer onExpire={handleExpire} expiryTimestamp={time} /> : '' }
+                    </div>
                    {
                       !isLoadingMode ? 
                         <HoverCard>
@@ -112,7 +129,7 @@ const Home = () => {
                         </HoverCard>
                     : ''
                    }
-                    <Button type="submit" disabled={(wordCount < 5) || (word && wordCount > 500)}  className="max-w-sm flex-center m-auto">
+                    <Button type="submit" disabled={(wordCount < 5) || (word && wordCount > 500) || (timer && expired)}  className="max-w-sm flex-center m-auto">
                         {
                             isLoadingCreate ? (
                                 <div className='flex-center gap-2'>
@@ -131,6 +148,7 @@ const Home = () => {
                     <h3>Come back again tomorrow to try out the next prompt</h3>
                     <p className="subtle-semibold text-grey">Or head over to your Nook to read through your old ones.</p>
                   </div>
+                  
             </>
 
             }
