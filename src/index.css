@@ -175,7 +175,7 @@
   }
 
   .leftsidebar {
-    @apply px-6 py-10 flex-col justify-between min-w-[270px];
+    @apply sm:px-6 py-10 sm:flex-col justify-between min-w-[270px];
   }
 
   .leftsidebar-link {

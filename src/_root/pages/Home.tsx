@@ -127,7 +127,7 @@ const Home = () => {
             ) : <>
                   <div className="flex-center m-auto flex-col gap-5">
                     <p className="header-text small text-grey">{date}</p>
-                    <h1 className="h1-bold">You have already written todays story!</h1>
+                    <h1 className="h1-bold text-center">You have already written todays story!</h1>
                     <h3>Come back again tomorrow to try out the next prompt</h3>
                     <p className="subtle-semibold text-grey">Or head over to your Nook to read through your old ones.</p>
                   </div>

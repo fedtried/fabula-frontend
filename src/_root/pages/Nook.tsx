@@ -4,8 +4,10 @@ import { Outlet } from 'react-router-dom'
 const Nook = () => {
   return (
     <>
+
         <SideBar />
         <Outlet />
+
     </>
   )
 }

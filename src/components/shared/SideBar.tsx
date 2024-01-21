@@ -9,8 +9,8 @@ const SideBar = () => {
     const {pathname} = useLocation()
 
     return (
-        <section className="leftsidebar  border-r-2 border-r-gray-400">
-            <div className="flex flex-col gap-11">
+        <section className="leftsidebar border-r-2 border-r-gray-400">
+            <div className="flex sm:flex-col gap-4 sm:gap-11">
                 <div className="flex gap-2 flex-center">
                     <Avatar className="h-14 w-14 rounded-full" name={user.name} />
                     <div>
@@ -23,7 +23,7 @@ const SideBar = () => {
                     const isActive = pathname === ( `/nook/${user.id}` + link.route )
 
                     return (
-                        <Link className={`flex gap-3 items-center p-6 rounded-md hover:underline ${isActive && 'bg-complement'}`} to={`/nook/${user.id}` + link.route} key={link.label}>
+                        <Link className={`flex sm:gap-3 items-center pl-1 sm:p-6 rounded-md hover:underline ${isActive && 'bg-complement'}`} to={`/nook/${user.id}` + link.route} key={link.label}>
                             {link.label}
                         </Link>
                     )
