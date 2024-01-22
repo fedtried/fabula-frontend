@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useTimer } from 'react-timer-hook';
 
-const Timer = ({ expiryTimestamp, onExpire }) => {
+const Timer = ({ expiryTimestamp, onExpire }: {expiryTimestamp: any, onExpire:any}) => {
     const {
         seconds,
         minutes

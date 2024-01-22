@@ -1,4 +1,3 @@
-import ModeService from "@/services/ModeService"
 import PromptService from "@/services/PromptService"
 import StoryService from "@/services/StoryService"
 import { INewStory, INewUser, IPrompt, IUpdateUser } from "@/types"
@@ -96,11 +95,4 @@ export const useDeleteUser = () => {
     return useMutation({
         mutationFn: UserService.deleteUser,
       });
-}
-
-export const useGetAllModes = () => {
-    return useQuery ({
-        queryKey: [QUERY_KEYS.GET_MODES],
-        queryFn: ModeService.findModes
-    })
 }
