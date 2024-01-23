@@ -18,10 +18,8 @@ const getPrompt = async (date: string, userId: string) => {
       );
   
       if ("id" in promptData.data) {
-        // TypeScript now knows that promptData.data is of type IPrompt
         return promptData.data;
       } else {
-        // If not, return the fallback value
         return { written: true };
       }
     }

@@ -1,7 +1,9 @@
+import CompletedStory from "@/components/shared/CompletedStory"
 import Loader from "@/components/shared/Loader"
 import Timer from "@/components/shared/Timer"
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from '@/components/ui/use-toast'
@@ -27,6 +29,7 @@ const Home = () => {
     resolver: zodResolver(storyFormSchema),
     defaultValues: {
       writing: "",
+      share: false
     },
   });
   const time = new Date();
@@ -45,24 +48,22 @@ const Home = () => {
   }, [])
   
   async function onSubmit (value: z.infer<typeof storyFormSchema>) {
-  if ("id" in quote! && "quote" in quote && "date" in quote) {
-    const newPost = await createStory({
-      ...value,
-      userId: user.id,
-      promptId: quote.id,
-      date: epDate,
-      quote: quote.quote,
-    });
-    if (!newPost) {
-      toast({
-        title: `Story failed. Please try again.`,
+    if ("id" in quote! && "quote" in quote && "date" in quote) {
+      const newPost = await createStory({
+        ...value,
+        userId: user.id,
+        promptId: quote.id,
+        date: epDate,
+        quote: quote.quote,
       });
-    }
+      if (!newPost) {
+        toast({
+          title: `Story failed. Please try again.`,
+        });
+      }
 
-    navigate(`/nook/${user.id}/writing`);
-  } else {
-    console.error("Invalid quote format:", quote);
-  }
+      navigate(`/nook/${user.id}/writing`);
+    }
   }
 
   useEffect(() => {
@@ -82,19 +83,22 @@ const Home = () => {
   const handleExpire = () => {
     setExpired(true)
     const value = {
-      writing: form.getValues().writing
+      writing: form.getValues().writing,
+      share: form.getValues().share
     }
     onSubmit(value)
   };
 
   return (
     <>
+        <div className="w-full flex-row flex justify-between p-3 bg-orange">
+           <h1 className="header-text h1-bold">Writing Zone</h1> <span className="text-sm header-text text-grey">{date}</span>
+        </div>
           {!isPromptsLoading && quote && ("quote" in quote) && !("written" in quote) ? (
             <Form {...form}>
               <div className="home-container w-full">
-              <div className='sm:w-420 flex-col flex-center'>
-                    <h3 className='header-text text-grey'>{date}</h3>
-                    <h1 className='header-text h1-semibold text-center'>"{quote.quote}"</h1>
+              <div className='flex-col flex-center'>
+                    <h1 className='header-text text-xl text-center'>"{quote.quote}"</h1>
                 </div>
 
                 <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-64 flex-col gap-5 mt-4 w-full">
@@ -110,43 +114,68 @@ const Home = () => {
                                 setWordCount(wc)
                               }}
                               placeholder="Write your story here"
-                              className="shad-textarea w-full"
+                              className="w-full h-[360px]"
                               {...field}
                             />
                           </FormControl>
+                          <FormDescription>
+                          <div className="flex flex-row justify-between">
+                            <p className="text-sm text-muted-foreground">
+                              
+                            </p>
+                            {timer ? <Timer onExpire={handleExpire} expiryTimestamp={time} /> : ( 
+                            <>
+                              {wordCount} {wordCount > 1 || wordCount == 0 ? `words` : `word`}
+                            </> ) }
+                          </div>
+                          </FormDescription>
                         </FormItem>
                       )}
                     />
-                    <div className="flex flex-row justify-between">
-                      <p className="text-sm text-muted-foreground">
-                        {wordCount} {wordCount > 1 ? `words` : `word`}
-                      </p>
-                      {timer ? <Timer onExpire={handleExpire} expiryTimestamp={time} /> : '' }
+                    <div>
+                      <HoverCard>
+                        <HoverCardTrigger className="text-xs text-muted-foreground cursor-pointer hover:underline" >What is the writing zone?</HoverCardTrigger>
+                        {cardContent}
+                      </HoverCard>
                     </div>
-                    <HoverCard>
-                      <HoverCardTrigger className="text-xs text-muted-foreground cursor-pointer hover:underline" >How does this work?</HoverCardTrigger>
-                      {cardContent}
-                    </HoverCard>
-                    <Button type="submit" disabled={(wordCount < 5) || (word && wordCount > 500) || (timer && expired)}  className="max-w-sm flex-center m-auto">
-                        {
-                            isLoadingCreate ? (
-                                <div className='flex-center gap-2'>
-                                    <Loader/> Loading...
-                                </div>
-                            ) : 'Save'
-                        }
-                    </Button>
+                    <div className="button-grp flex sm:flex-row flex-col-reverse items-center">
+                    <Button name="save" value="save" type="submit" disabled={(wordCount < 5) || (word && wordCount > 500) || (timer && expired)}  className="max-w-sm flex-center">
+                          {
+                              isLoadingCreate ? (
+                                  <div className='flex-center gap-2'>
+                                      <Loader/> Loading...
+                                  </div>
+                              ) : 
+                              'Save'
+                           }
+                      </Button>
+                    <FormField
+                      control={form.control}
+                      name="share"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 ml-5">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>
+                            Publish my story to today’s Anthology.
+                            </FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+  
+                    </div>
                 </form>
               </div>
             </Form>
             ) : 
             <>
-              <div className="flex-center m-auto flex-col gap-5">
-                <p className="header-text small text-grey">{date}</p>
-                <h1 className="h1-bold text-center">You have already written todays story!</h1>
-                <h3>Come back again tomorrow to try out the next prompt</h3>
-                <p className="subtle-semibold text-grey">Or head over to your Nook to read through your old ones.</p>
-              </div>
+              <CompletedStory />
             </>
             }
         </>

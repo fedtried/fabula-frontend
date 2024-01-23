@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Handlee&family=Mulish:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Lilita+One&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -80,11 +80,11 @@
       /* TYPOGRAPHY */
 
   .body-text {
-    @apply font-mulish
+    @apply font-lato
   }
 
   .header-text {
-    @apply font-handwriting
+    @apply font-lilita
   }
 
   .h1-bold {
@@ -171,11 +171,11 @@
 
   /* Footer */
   .footer {
-    @apply z-50 flex-between w-full sticky bottom-0 bg-complement px-5 py-4 rounded-t-[20px];
+    @apply z-50 flex-between w-full bg-complement px-5 py-4 rounded-t-[20px];
   }
 
   .leftsidebar {
-    @apply sm:px-6 py-10 sm:flex-col justify-between min-w-[270px];
+    @apply sm:px-6 ml-2 py-10 sm:flex-col justify-between min-w-[270px];
   }
 
   .leftsidebar-link {
@@ -183,11 +183,11 @@
   }
 
   .home-container {
-    @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 w-full;
+    @apply flex flex-col flex-1 items-center gap-10 py-10 px-3 lg:p-14 w-full;
   }
 
   .home-posts {
-    @apply max-w-screen-sm flex flex-col items-center w-full gap-6 md:gap-9;
+    @apply flex flex-col items-center w-full gap-6 md:gap-9;
   }
 
   .story-card {

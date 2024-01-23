@@ -1,6 +1,5 @@
+import Loader from '@/components/shared/Loader'
 import { Button } from '@/components/ui/button'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
 import {
     Form,
     FormControl,
@@ -8,15 +7,16 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-  } from "@/components/ui/form"
-  import { Input } from "@/components/ui/input"
-import { z } from 'zod'
-import Loader from '@/components/shared/Loader'
-import { Link, useNavigate } from 'react-router-dom'
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import { useToast } from '@/components/ui/use-toast'
-import { useSignInAccount } from '@/queries/queries'
 import { useUserContext } from '@/context/AuthContext'
 import { signInFormSchema } from '@/lib/validation'
+import { useSignInAccount } from '@/queries/queries'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import { z } from 'zod'
 
 const SignInForm = () => {
   const {toast} = useToast();
@@ -59,8 +59,8 @@ const SignInForm = () => {
       <section className='flex flex-1 justify-center items-center py-10 flex-col'>
           <Form {...form}>
               <div className='sm:w-420 flex-col flex-center'>
-                  <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Login to Fabula</h2>
-                  <p className='text-grey md:base-regular'>To use Fabula login using your details</p>
+                  <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Welcome Back!</h2>
+                  <p className='text-grey md:base-regular'>Login with your details to start writing.</p>
               </div>
 
               <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-64 flex-col gap-5 mt-4">
@@ -102,10 +102,12 @@ const SignInForm = () => {
 
                   <p className='text-small-regular text-grey text-center mt-2'>
                       Need an account?
-                      <Link to='/register' className='text-complement text-small-semibold ml-1'>Register</Link>
+                      <Link to='/register' className='text-orange underline text-small-semibold ml-1'>Register now</Link>
                   </p>
               </form>
           </Form>
+          <p className='text-small-regular text-grey text-center mt-2 text-xs' >OR</p>
+        <a className='text-small-regular text-grey text-center mt-2' href="/oauth2/authorization/google">Login with Google</a>
           </section>
       </>
   )

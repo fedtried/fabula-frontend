@@ -1,6 +1,6 @@
 import PromptService from "@/services/PromptService"
 import StoryService from "@/services/StoryService"
-import { INewStory, INewUser, IPrompt, IUpdateUser } from "@/types"
+import { INewStory, INewUser, IPrompt, IStory, IUpdateUser } from "@/types"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import UserService from "../services/UserService"
 import { QUERY_KEYS } from "./queryKeys"
@@ -95,4 +95,12 @@ export const useDeleteUser = () => {
     return useMutation({
         mutationFn: UserService.deleteUser,
       });
+}
+
+export const useGetStoriesByDate = (date: string) => {
+    return useQuery<IStory[]>({
+      queryKey: [QUERY_KEYS.GET_ALL_STORIES, date],
+      queryFn: () => StoryService.getTodayStory(date),
+      enabled: !!date
+    });
 }

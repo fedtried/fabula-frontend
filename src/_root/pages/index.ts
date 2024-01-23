@@ -1,5 +1,5 @@
-export {default as Home} from './Home'
-export {default as Nook} from './Nook'
-export {default as UpdateProfile} from './UpdateProfile'
-export {default as Writing} from './Writing'
-export {default as About} from './About'
+export { default as About } from './General/About'
+export { default as Home } from './Home'
+export { default as UpdateProfile } from './UpdateProfile'
+export { default as Writing } from './Writing'
+

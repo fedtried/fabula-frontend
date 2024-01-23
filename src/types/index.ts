@@ -39,6 +39,8 @@ export type IStory = {
     date: string;
     quote: string;
     writing: string;
+    share: boolean;
+    name?: string;
 }
 
 export type INewStory = {
@@ -47,6 +49,7 @@ export type INewStory = {
   writing: string;
   userId: string;
   promptId: string;
+  share: boolean;
 }
 
 export type IUpdateUser = {

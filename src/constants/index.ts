@@ -6,13 +6,21 @@ export const footerLinks = [
     {
       route: "/about",
       label: "About",
+    },
+    {
+      route: "/guidelines",
+      label: "Community Guidelines",
+    },
+    {
+      route: "/privacy",
+      label: "Privacy Policy",
     }
 ];
 
 export const sidebarLinks = [
   {
       route: "/writing",
-      label: "My Writing",
+      label: "My Stories",
   },
   {
       route: "/profile",
@@ -20,9 +28,13 @@ export const sidebarLinks = [
   }
 ];
 
-export const user = {
-  username: 'fed',
-  imageUrl: '',
-  id: 1,
-  email: 'test@test.com'
-}
+export const homeSidebarLinks = [
+  {
+      route: "/",
+      label: "Writing Zone",
+  },
+  {
+    route: '/anthology',
+    label: 'Anthology'
+  }
+];

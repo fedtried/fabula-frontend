@@ -50,15 +50,16 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        'off-white': '#F2DCB1',
+        'off-white': '#FFEBB7',
         'complement': '#B1C7F2',
         'grey': '#444444',
         'black': '#24262B',
-        'white': '#E1DFD0'
+        'white': '#E1DFD0',
+        'orange': '#D17A22'
       },
       fontFamily: {
-        mulish: ['Mulish', 'sans-serif'],
-        handwriting: ['Handlee', 'cursive']
+        lato: ['Lato', 'sans-serif'],
+        lilita: ['Lilita One', 'sans-serif']
       },
       screens: {
         'xs': '480px',

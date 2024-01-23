@@ -12,7 +12,8 @@ export const signInFormSchema = z.object({
 })
 
 export const storyFormSchema = z.object({
-    writing: z.string()
+    writing: z.string(),
+    share: z.boolean().default(false)
 })
 
 export const updateProfileFormSchema = z.object({

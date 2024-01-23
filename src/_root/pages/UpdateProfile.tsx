@@ -83,9 +83,9 @@ const UpdateProfile = () => {
     <>
     {
       isLoadingDelete || isLoadingUpdate ? <Loader /> : (
-      <div className='flex flex-col flex-1 flex-center w-full'>
-        <div className='sm:w-420 flex-col flex-center'>
-            <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Update Profile</h2>
+      <div className='flex flex-col flex-1 w-full flex-center'>
+        <div className='flex-col flex-center'>
+          <h2 className='h1-bold md:h2-bold text-left w-full header-text text-center'>Update Profile</h2>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-64 flex-col gap-5 mt-4">

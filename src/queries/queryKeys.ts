@@ -8,5 +8,6 @@ export enum QUERY_KEYS {
     GET_FILE_PREVIEW = "getFilePreview",
     GET_PROMPT = "getPrompt",
     GET_USERS = "getUsers",
-    GET_MODES ="getModes"
+    GET_MODES ="getModes",
+    GET_ALL_STORIES = "getTodaysStories",
 }

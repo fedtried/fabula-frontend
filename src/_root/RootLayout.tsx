@@ -8,7 +8,7 @@ const RootLayout = () => {
   return (
     <>
       {isAuthenticated ? (
-              <div className='w-full md:flex flex-col'>
+          <div className='w-full md:flex flex-col min-h-100vh'>
               <Navbar />
               <section className='flex flex-1 h-full w-full'>
                 <Outlet />

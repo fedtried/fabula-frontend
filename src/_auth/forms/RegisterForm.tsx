@@ -57,8 +57,8 @@ const RegisterForm = () => {
         <>
             <Form {...form}>
                 <div className='sm:w-420 flex-col flex-center'>
-                    <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Register for a new account</h2>
-                    <p className='text-grey md:base-regular'>To use Fabula register your details</p>
+                    <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Create an account</h2>
+                    <p className='text-grey md:base-regular'>To get started, just register your information.</p>
                 </div>
 
                 <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-64 flex-col gap-5 mt-4">
@@ -116,10 +116,12 @@ const RegisterForm = () => {
 
                     <p className='text-small-regular text-grey text-center mt-2'>
                         Already have an account?
-                        <Link to='/sign-in' className='text-complement text-small-semibold ml-1'>Log in</Link>
+                        <Link to='/sign-in' className='text-orange underline text-small-semibold ml-1'>Log in</Link>
                     </p>
                 </form>
             </Form>
+            <p className='text-small-regular text-grey text-center mt-2 text-xs' >OR</p>
+            <a className='text-small-regular text-grey text-center mt-2' href="/oauth2/authorization/google">Login with Google</a>
         </>
     )
 }
