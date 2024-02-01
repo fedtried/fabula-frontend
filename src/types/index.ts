@@ -66,3 +66,13 @@ export type IPrompt = {
     date: string;
     mode: string;
 }
+
+export type ICreateStoryRequest = {
+    userId: string;
+    promptId: string;
+    date: string;
+    quote: string;
+    writing: string;
+    share: boolean;
+    name?: string;
+}

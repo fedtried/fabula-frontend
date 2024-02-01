@@ -1,4 +1,4 @@
-import User, { INewUser, IUpdateUser } from "@/types"
+import User, { INewUser, IStory, IUpdateUser } from "@/types"
 import apiClient from "../api/axios"
 import authHeader from "./authHeader"
 
@@ -41,8 +41,8 @@ const getUserById = async (id:string) => {
 }
 
 const getUserStories = async (id: string) => {
-    const response = await apiClient.get<User>("/user/"+id, { headers: authHeader() })
-    return response.data.stories
+    const response = await apiClient.get<IStory[]>("/story/user/"+id, { headers: authHeader() })
+    return response.data
 }
 
 

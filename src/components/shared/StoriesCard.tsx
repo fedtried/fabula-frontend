@@ -14,7 +14,7 @@ const StoriesCard = (props: { writing: string; date?: string; quote?: string, na
         </CardHeader>
         :
         <CardHeader>
-          <CardTitle className="header-text flex flex-row justify-between">
+          <CardTitle className="header-text font-normal flex flex-row justify-between">
             "{quote}"
             <span className="text-sm body-text text-muted-foreground">{date}</span>
           </CardTitle>

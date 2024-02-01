@@ -1,15 +1,17 @@
-import { INewStory, IStory } from "@/types"
+import { ICreateStoryRequest, INewStory, IStory } from "@/types"
 import apiClient from "../api/axios"
 import authHeader from "./authHeader"
 
 const createStory = async (story : INewStory ) => {
-    const body : IStory = {
+    const body : ICreateStoryRequest = {
+        userId: story.userId,
+        promptId: story.promptId,
         date: story.date,
         quote: story.quote,
         writing: story.writing,
         share: story.share
     }
-    const response = await apiClient.post<INewStory>("/story?userId="+ story.userId + "&promptId="+story.promptId, body, { headers: authHeader() })
+    const response = await apiClient.post<INewStory>("/story", body, { headers: authHeader() })
     return response.data
 }
 
